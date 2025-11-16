@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediConnect - Home</title>
+    <link rel="stylesheet" href="styles.css?v=3">
+    <link rel="icon" href="data:,">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <h1>MediConnect</h1>
+                <p>Healthcare Portal</p>
+            </div>
+            <div class="role-selector">
+                <p class="role-selector-title">Select your role to continue:</p>
+                <div class="role-buttons">
+                    <button class="btn btn-role" type="button" onclick="goToLogin('patient')">
+                        <span class="role-icon">👤</span>
+                        <span class="role-text">Patient</span>
+                    </button>
+                    <button class="btn btn-role" type="button" onclick="goToLogin('doctor')">
+                        <span class="role-icon">👨‍⚕️</span>
+                        <span class="role-text">Doctor</span>
+                    </button>
+                    <button class="btn btn-role" type="button" onclick="goToLogin('nurse')">
+                        <span class="role-icon">👩‍⚕️</span>
+                        <span class="role-text">Nurse</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Simple function that works immediately - no dependencies
+        // Works identically for patient, doctor, and nurse
+        // Prevent multiple clicks/redirects
+        let isRedirecting = false;
+        
+        function goToLogin(role) {
+            // Prevent multiple clicks
+            if (isRedirecting) {
+                console.log('Already redirecting, ignoring click');
+                return false;
+            }
+            
+            console.log('goToLogin called with role:', role);
+            
+            // Validate role
+            const validRoles = ['patient', 'doctor', 'nurse'];
+            if (!validRoles.includes(role)) {
+                console.error('Invalid role:', role);
+                alert('Invalid role selected');
+                return false;
+            }
+            
+            // Set flag to prevent multiple redirects
+            isRedirecting = true;
+            
+            // Store role and redirect - same logic for all roles
+            try {
+                sessionStorage.setItem('selectedRole', role);
+                console.log('Role stored:', role, '- redirecting to login page');
+                // Immediate redirect
+                window.location.replace('login.html?role=' + role);
+            } catch (error) {
+                console.error('Error storing role:', error);
+                // Fallback if sessionStorage fails - still redirect
+                window.location.replace('login.html?role=' + role);
+            }
+            
+            return false;
+        }
+        
+        // Make function globally available immediately
+        window.goToLogin = goToLogin;
+        
+        console.log('goToLogin function loaded - works for patient, doctor, and nurse');
+    </script>
+    <script src="script.js?v=3"></script>
+</body>
+</html>
+

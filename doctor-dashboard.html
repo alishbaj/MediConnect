@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediConnect - Doctor Dashboard</title>
+    <link rel="stylesheet" href="styles.css?v=3">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <h2>MediConnect - Doctor Portal</h2>
+            <button class="btn btn-secondary" onclick="logout()">Logout</button>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <div class="dashboard-header">
+            <h1>Doctor Dashboard</h1>
+        </div>
+
+        <!-- Patients List Section -->
+        <section class="dashboard-section">
+            <h2>All Patients</h2>
+            <div class="card">
+                <div class="table-container">
+                    <table id="patientsTable" class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Patient ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Date of Birth</th>
+                                <th>Insurance</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="7">No patients found</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Order Lab Results Section -->
+        <section class="dashboard-section">
+            <h2>Order Lab Results</h2>
+            <div class="card">
+                <form id="labOrderForm" class="form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="PatientID">Select Patient</label>
+                            <select id="PatientID" name="PatientID" required>
+                                <option value="">-- Select Patient --</option>
+                                <!-- Will be populated by backend -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="TestType">Test Type</label>
+                            <input type="text" id="TestType" name="TestType" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="TestDate">Test Date</label>
+                        <input type="date" id="TestDate" name="TestDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="ResultNotes">Notes (Optional)</label>
+                        <textarea id="ResultNotes" name="ResultNotes" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Order Lab Test</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Add Treatment Section -->
+        <section class="dashboard-section">
+            <h2>Add Treatment</h2>
+            <div class="card">
+                <form id="treatmentForm" class="form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="PatientID_Treatment">Select Patient</label>
+                            <select id="PatientID_Treatment" name="PatientID" required>
+                                <option value="">-- Select Patient --</option>
+                                <!-- Will be populated by backend -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="TreatmentType">Treatment Type</label>
+                            <input type="text" id="TreatmentType" name="TreatmentType" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="StartDate">Start Date</label>
+                            <input type="date" id="StartDate" name="StartDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="EndDate">End Date</label>
+                            <input type="date" id="EndDate" name="EndDate">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Treatment</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Assigned Appointments Section -->
+        <section class="dashboard-section">
+            <h2>My Appointments</h2>
+            <div class="card">
+                <div class="table-container">
+                    <table id="appointmentsTable" class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Date & Time</th>
+                                <th>Patient</th>
+                                <th>Reason</th>
+                                <th>Status</th>
+                                <th>Notes</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="6">No appointments found</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js?v=3"></script>
+    <script src="doctor-script.js?v=3"></script>
+</body>
+</html>
+

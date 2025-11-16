@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediConnect - Login</title>
+    <link rel="stylesheet" href="styles.css?v=3">
+    <link rel="icon" href="data:,">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <h1>MediConnect</h1>
+                <p id="roleDisplay">Login</p>
+            </div>
+            <form id="loginForm" class="login-form">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Enter any email" value="user@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter any password" value="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+            <div class="back-link">
+                <a href="index.html" class="btn btn-secondary">← Back to Home</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        // SINGLE login handler - works for all roles (patient, doctor, nurse)
+        // This is the ONLY handler for the login form - no duplicates
+        // Prevent multiple submissions
+        let isSubmitting = false;
+        
+        (function() {
+            'use strict';
+            
+            // Initialize immediately if DOM is ready, otherwise wait
+            function initNow() {
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', initLoginHandler);
+                } else {
+                    // DOM already ready, run immediately
+                    setTimeout(initLoginHandler, 0);
+                }
+            }
+            
+            initNow();
+            
+            function initLoginHandler() {
+                const loginForm = document.getElementById('loginForm');
+                const roleDisplay = document.getElementById('roleDisplay');
+                
+                if (!loginForm) {
+                    console.error('Login form not found!');
+                    return;
+                }
+                
+                // Get role from URL parameter
+                const urlParams = new URLSearchParams(window.location.search);
+                const role = urlParams.get('role') || sessionStorage.getItem('selectedRole');
+                
+                // Update role display
+                if (roleDisplay && role) {
+                    const roleNames = {
+                        'patient': 'Patient Login',
+                        'doctor': 'Doctor Login',
+                        'nurse': 'Nurse Login'
+                    };
+                    roleDisplay.textContent = roleNames[role] || 'Login';
+                    sessionStorage.setItem('selectedRole', role);
+                }
+                
+                // Remove any existing handlers by cloning the form
+                const formParent = loginForm.parentNode;
+                const newForm = loginForm.cloneNode(true);
+                formParent.replaceChild(newForm, loginForm);
+                
+                // Attach SINGLE handler - works for all roles
+                newForm.addEventListener('submit', handleLoginSubmit, true);
+                
+                console.log('Login handler attached (single handler for all roles)');
+            }
+            
+            function handleLoginSubmit(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+                
+                // Prevent multiple submissions
+                if (isSubmitting) {
+                    console.log('Already submitting, ignoring');
+                    return false;
+                }
+                
+                isSubmitting = true;
+                console.log('Login form submitted');
+                
+                // Get role from sessionStorage or URL
+                const urlParams = new URLSearchParams(window.location.search);
+                const roleFromUrl = urlParams.get('role');
+                const roleFromStorage = sessionStorage.getItem('selectedRole');
+                const selectedRole = roleFromStorage || roleFromUrl;
+                
+                console.log('Role from URL:', roleFromUrl);
+                console.log('Role from storage:', roleFromStorage);
+                console.log('Selected role:', selectedRole);
+                
+                if (!selectedRole) {
+                    console.error('No role found!');
+                    alert('No role selected. Please go back and select a role.');
+                    window.location.href = 'index.html';
+                    return false;
+                }
+                
+                // Store user info
+                const emailInput = document.getElementById('email');
+                const email = emailInput ? emailInput.value : '';
+                sessionStorage.setItem('userRole', selectedRole);
+                if (email) {
+                    sessionStorage.setItem('userEmail', email);
+                }
+                
+                // Redirect to appropriate dashboard (works for patient, doctor, nurse)
+                // Normalize role (trim whitespace, convert to lowercase for lookup)
+                const normalizedRole = selectedRole.trim().toLowerCase();
+                
+                const dashboardMap = {
+                    'patient': 'patient-dashboard.html',
+                    'doctor': 'doctor-dashboard.html',
+                    'nurse': 'nurse-dashboard.html'
+                };
+                
+                console.log('Dashboard map:', dashboardMap);
+                console.log('Original role:', selectedRole);
+                console.log('Normalized role:', normalizedRole);
+                
+                const dashboardUrl = dashboardMap[normalizedRole];
+                console.log('Dashboard URL found:', dashboardUrl);
+                
+                if (dashboardUrl) {
+                    console.log('Redirecting to:', dashboardUrl);
+                    // Immediate redirect using replace to prevent back button issues
+                    window.location.replace(dashboardUrl);
+                    return false;
+                } else {
+                    console.error('Invalid role:', selectedRole, '(normalized:', normalizedRole + ')');
+                    console.error('Available roles:', Object.keys(dashboardMap));
+                    alert('Invalid role: ' + selectedRole + '. Please try again.');
+                    return false;
+                }
+            }
+        })();
+    </script>
+</body>
+</html>
+

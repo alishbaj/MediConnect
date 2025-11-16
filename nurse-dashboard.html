@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediConnect - Nurse Dashboard</title>
+    <link rel="stylesheet" href="styles.css?v=3">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <h2>MediConnect - Nurse Portal</h2>
+            <button class="btn btn-secondary" onclick="logout()">Logout</button>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <div class="dashboard-header">
+            <h1>Nurse Dashboard</h1>
+        </div>
+
+        <!-- Nurse Information Section -->
+        <section class="dashboard-section">
+            <h2>My Information</h2>
+            <div class="card">
+                <div id="nurseInfo" class="info-display">
+                    <div class="info-item">
+                        <strong>Shift Type:</strong> <span id="ShiftType">Loading...</span>
+                    </div>
+                    <div class="info-item">
+                        <strong>Ward:</strong> <span id="Ward">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pending Lab Results Section -->
+        <section class="dashboard-section">
+            <h2>Pending Lab Results</h2>
+            <div class="card">
+                <div class="table-container">
+                    <table id="pendingLabResultsTable" class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Test Date</th>
+                                <th>Test Type</th>
+                                <th>Patient</th>
+                                <th>Ordered By</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="5">No pending lab results found</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Conduct Lab Results Section -->
+        <section class="dashboard-section">
+            <h2>Conduct Lab Results</h2>
+            <div class="card">
+                <form id="labResultForm" class="form">
+                    <div class="form-group">
+                        <label for="LabResID">Select Lab Order</label>
+                        <select id="LabResID" name="LabResID" required>
+                            <option value="">-- Select Lab Order --</option>
+                            <!-- Will be populated by backend -->
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="TestDate_Conduct">Test Date</label>
+                            <input type="date" id="TestDate_Conduct" name="TestDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="TestType_Conduct">Test Type</label>
+                            <input type="text" id="TestType_Conduct" name="TestType" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="ResultNotes_Conduct">Result Notes</label>
+                        <textarea id="ResultNotes_Conduct" name="ResultNotes" rows="4" required></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="PatientID_Lab">Patient ID</label>
+                            <input type="number" id="PatientID_Lab" name="PatientID" required readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="DoctorID_Lab">Doctor ID</label>
+                            <input type="number" id="DoctorID_Lab" name="DoctorID" required readonly>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit Lab Results</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Completed Lab Results Section -->
+        <section class="dashboard-section">
+            <h2>Completed Lab Results</h2>
+            <div class="card">
+                <div class="table-container">
+                    <table id="completedLabResultsTable" class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Test Date</th>
+                                <th>Test Type</th>
+                                <th>Patient</th>
+                                <th>Result Notes</th>
+                                <th>Ordered By</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="5">No completed lab results found</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js?v=3"></script>
+    <script src="nurse-script.js?v=3"></script>
+</body>
+</html>
+
