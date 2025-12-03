@@ -163,7 +163,7 @@ async function loadAppointments() {
         const patientID = sessionStorage.getItem('patientID');
         if (!patientID) {
             console.warn('PatientID not found in sessionStorage');
-            tbody.innerHTML = '<tr><td colspan="5">Please log in to view appointments</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="6">Please log in to view appointments</td></tr>';
             return;
         }
 
@@ -178,7 +178,7 @@ async function loadAppointments() {
         }
 
         if (!data || data.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="5">No appointments found</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="6">No appointments found</td></tr>';
             return;
         }
 
@@ -210,6 +210,13 @@ async function loadAppointments() {
                     <td>${doctorName}</td>
                     <td>${appt.IsCompleted ? 'Completed' : 'Pending'}</td>
                     <td>${appt.ApptNotes || '-'}</td>
+                    <td>
+                        ${!appt.IsCompleted ? `
+                            <button class="btn btn-danger" onclick="cancelAppointment(${appt.AppointmentID})">
+                                Cancel
+                            </button>
+                        ` : '-'}
+                    </td>
                 </tr>
             `;
         }).join('');
@@ -217,9 +224,43 @@ async function loadAppointments() {
     } catch (error) {
         console.error('Error loading appointments:', error);
         showMessage('Error loading appointments. Please try again.', 'error');
-        tbody.innerHTML = '<tr><td colspan="5">Error loading appointments</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="6">Error loading appointments</td></tr>';
     }
 }
+
+// Cancel appointment
+async function cancelAppointment(appointmentID) {
+    // Show confirmation dialog
+    const confirmed = confirm('Are you sure you want to cancel this appointment? This action cannot be undone.');
+    
+    if (!confirmed) {
+        return; // User clicked "Cancel" - do nothing
+    }
+    
+    try {
+        // Delete the appointment from the database
+        const { error } = await supabase
+            .from('appointment')
+            .delete()
+            .eq('AppointmentID', appointmentID);
+
+        if (error) {
+            throw error;
+        }
+
+        showMessage('Appointment cancelled successfully', 'success');
+        
+        // Reload appointments to reflect the change
+        await loadAppointments();
+
+    } catch (error) {
+        console.error('Error cancelling appointment:', error);
+        showMessage('Error cancelling appointment. Please try again.', 'error');
+    }
+}
+
+// Make cancelAppointment available globally for onclick handlers
+window.cancelAppointment = cancelAppointment;
 
 // Load lab results
 async function loadLabResults() {
