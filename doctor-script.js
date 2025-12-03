@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         // In production, backend will handle authentication
         console.log('Doctor dashboard loaded');
     }
-   
     // Fetch and store DoctorID if not already in sessionStorage
     await fetchAndStoreDoctorID();
    
@@ -19,7 +18,17 @@ document.addEventListener('DOMContentLoaded', async function() {
     // Setup forms
     setupLabOrderForm();
     setupTreatmentForm();
+
+    // 🔹 modal close handler – KEEP THIS, no extra DOMContentLoaded
+    const closeBtn = document.getElementById('modalClose');
+    const modal = document.getElementById('patientModal');
+    if (closeBtn && modal) {
+        closeBtn.addEventListener('click', () => {
+            modal.classList.add('hidden');
+        });
+    }
 });
+
 
 // Fetch DoctorID from Supabase based on email
 async function fetchAndStoreDoctorID() {
@@ -187,7 +196,7 @@ async function loadAppointments() {
                 PatientID
             `)
             .eq('DoctorID', doctorID)
-            .order('ApptDateTime', { ascending: false });
+            .order('ApptDateTime', { ascending: true });
 
 
         if (error) {
@@ -401,15 +410,46 @@ async function completeAppointment(appointmentID) {
 
 // Make completeAppointment available globally for onclick handlers
 window.completeAppointment = completeAppointment;
-window.viewPatientDetails = viewPatientDetails;
-
 
 // View patient details
-function viewPatientDetails(patientID) {
-    // TODO: Implement patient details modal or navigation
-    console.log('Viewing patient details:', patientID);
-    alert(`Patient details for ID ${patientID} will be displayed here`);
+async function viewPatientDetails(patientID) {
+  try {
+    const { data, error } = await supabase
+      .from('patient')
+      .select('PatientID, Fname, Lname, Email, PhoneNo, DOB, Insurance')
+      .eq('PatientID', patientID)
+      .single();
+
+    if (error) throw error;
+
+    // fill modal fields
+    document.getElementById('modalName').textContent = data.Fname + " " + data.Lname;
+    document.getElementById('modalEmail').textContent = data.Email || "N/A";
+    document.getElementById('modalPhone').textContent = data.PhoneNo || "N/A";
+    document.getElementById('modalDOB').textContent = data.DOB ? new Date(data.DOB).toLocaleDateString() : "N/A";
+    document.getElementById('modalInsurance').textContent = data.Insurance || "N/A";
+
+    // show modal
+    document.getElementById('patientModal').classList.remove('hidden');
+   
+  } catch (err) {
+    console.error("modal error:", err);
+    showMessage("could not load patient details", "error");
+  }
 }
+
+window.viewPatientDetails = viewPatientDetails;
+
+const closeBtn = document.getElementById('modalClose');
+if (closeBtn) {
+  closeBtn.addEventListener('click', () => {
+    document.getElementById('patientModal').classList.add('hidden');
+  });
+}
+
+
+
+
 
 // Helper functions
 function showMessage(message, type = 'success') {
