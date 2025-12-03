@@ -14,35 +14,110 @@ async function seedUsers() {
   console.log("=== Seeding users table ===");
 
   const seedData = [
+    // --- Patients ---
     {
       email: "alice.anderson@email.com",
       password: "123r",
-      role:"patient",
+      role: "patient",
     },
     {
-      email: "sarah.johnson@mediconnect.com",
-      password: "3456",
-      role:"doctor",
+      email: "bob.baker@email.com",
+      password: "123r",
+      role: "patient",
     },
     {
-      email: "david.jones@mediconnect.com",
-      password: "45678",
-      role:"nurse",
+      email: "carol.clark@email.com",
+      password: "123r",
+      role: "patient",
     },
+    {
+      email: "daniel.davis@email.com",
+      password: "123r",
+      role: "patient",
+    },
+    {
+      email: "emma.evans@email.com",
+      password: "123r",
+      role: "patient",
+    },
+    {
+      email: "frank.foster@email.com",
+      password: "123r",
+      role: "patient",
+    },
+    {
+      email: "grace.green@email.com",
+      password: "123r",
+      role: "patient",
+    },
+    {
+      email: "henry.harris@email.com",
+      password: "123r",
+      role: "patient",
+    },
+    {
+      email: "iris.irving@email.com",
+      password: "123r",
+      role: "patient",
+    },
+    {
+      email: "jack.jackson@email.com",
+      password: "123r",
+      role: "patient",
+    },
+
+    // --- Doctors ---
     {
       email: "john.smith@mediconnect.com",
       password: "doc123",
-      role:"doctor",
+      role: "doctor",
+    },
+    {
+      email: "sarah.johnson@mediconnect.com",
+      password: "doc123",
+      role: "doctor",
+    },
+    {
+      email: "michael.williams@mediconnect.com",
+      password: "doc123",
+      role: "doctor",
+    },
+    {
+      email: "robert.miller@mediconnect.com",
+      password: "doc123",
+      role: "doctor",
     },
     {
       email: "james.rodriguez@mediconnect.com",
       password: "doc123",
-      role:"doctor",
+      role: "doctor",
+    },
+
+    // --- Nurses ---
+    {
+      email: "emily.brown@mediconnect.com",
+      password: "nur123",
+      role: "nurse",
+    },
+    {
+      email: "david.jones@mediconnect.com",
+      password: "nur123",
+      role: "nurse",
     },
     {
       email: "jessica.garcia@mediconnect.com",
       password: "nur123",
-      role:"nurse",
+      role: "nurse",
+    },
+    {
+      email: "lisa.davis@mediconnect.com",
+      password: "nur123",
+      role: "nurse",
+    },
+    {
+      email: "maria.martinez@mediconnect.com",
+      password: "nur123",
+      role: "nurse",
     }
   ];
 
