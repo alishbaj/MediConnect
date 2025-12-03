@@ -137,8 +137,23 @@
         </section>
     </div>
 
-    <script src="script.js?v=3"></script>
-    <script src="doctor-script.js?v=3"></script>
+    <!-- Patient details modal -->
+<div id="patientModal" class="modal hidden">
+  <div class="modal-content">
+    <button id="modalClose" class="modal-close">&times;</button>
+
+    <h3>Patient Details</h3>
+
+    <p><strong>Name:</strong> <span id="modalName"></span></p>
+    <p><strong>Email:</strong> <span id="modalEmail"></span></p>
+    <p><strong>Phone:</strong> <span id="modalPhone"></span></p>
+    <p><strong>DOB:</strong> <span id="modalDOB"></span></p>
+    <p><strong>Insurance:</strong> <span id="modalInsurance"></span></p>
+  </div>
+</div>
+
+
+    <script type="module" src="script.js?v=4"></script>
+    <script type="module" src="doctor-script.js?v=4"></script>
 </body>
 </html>
-

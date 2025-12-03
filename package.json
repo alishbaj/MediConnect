@@ -6,7 +6,9 @@
   "scripts": {
     "start": "npx http-server -p 8000 -o",
     "dev": "npx http-server -p 8000 -o",
-    "serve": "npx http-server -p 8000"
+    "serve": "npx http-server -p 8000",
+    "load": "node load_supabase.js",
+    "seed": "node seed_users.js"
   },
   "keywords": [
     "healthcare",
@@ -14,6 +16,11 @@
     "frontend"
   ],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.86.0",
+    "bcrypt": "^6.0.0",
+    "csv-parser": "^3.2.0",
+    "dotenv": "^17.2.3"
+  }
 }
-

@@ -51,8 +51,7 @@
                     <div class="form-group">
                         <label for="DoctorID">Select Doctor</label>
                         <select id="DoctorID" name="DoctorID" required>
-                            <option value="">-- Select Doctor --</option>
-                            <!-- Will be populated by backend -->
+                            <option value="">-- Loading doctors --</option>
                         </select>
                     </div>
                     <button type="submit" class="btn btn-primary">Book Appointment</button>
@@ -73,11 +72,12 @@
                                 <th>Doctor</th>
                                 <th>Status</th>
                                 <th>Notes</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td colspan="5">No appointments found</td>
+                                <td colspan="6">Loading appointments...</td>
                             </tr>
                         </tbody>
                     </table>
@@ -101,7 +101,7 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td colspan="4">No lab results found</td>
+                                <td colspan="4">Loading lab results...</td>
                             </tr>
                         </tbody>
                     </table>
@@ -125,7 +125,7 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td colspan="4">No treatment history found</td>
+                                <td colspan="4">Loading treatment history...</td>
                             </tr>
                         </tbody>
                     </table>
@@ -135,7 +135,6 @@
     </div>
 
     <script src="script.js?v=3"></script>
-    <script src="patient-script.js?v=3"></script>
+    <script type="module" src="patient-script.js?v=2"></script>
 </body>
 </html>
-
