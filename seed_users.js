@@ -15,25 +15,35 @@ async function seedUsers() {
 
   const seedData = [
     {
-      email: "admin@example.com",
-      password: "AdminPass123!",
-      role: "admin",
+      email: "alice.anderson@email.com",
+      password: "123r",
+      role:"patient",
     },
     {
-      email: "doctor@example.com",
-      password: "DoctorPass123!",
-      role: "doctor",
+      email: "sarah.johnson@mediconnect.com",
+      password: "3456",
+      role:"doctor",
     },
     {
-      email: "nurse@example.com",
-      password: "NursePass123!",
-      role: "nurse",
+      email: "david.jones@mediconnect.com",
+      password: "45678",
+      role:"nurse",
     },
     {
-      email: "user@example.com",
-      password: "UserPass123!",
-      role: "user",
+      email: "john.smith@mediconnect.com",
+      password: "doc123",
+      role:"doctor",
     },
+    {
+      email: "james.rodriguez@mediconnect.com",
+      password: "doc123",
+      role:"doctor",
+    },
+    {
+      email: "jessica.garcia@mediconnect.com",
+      password: "nur123",
+      role:"nurse",
+    }
   ];
 
   for (const user of seedData) {

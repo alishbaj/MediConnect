@@ -1,11 +1,6 @@
 // Main script for home page, login page, and navigation
 console.log('script.js loaded');
 
-// Load Supabase browser client (public anon key)
-import { supabase } from "./supabaseBrowser.js";
-
-console.log("Supabase client loaded:", supabase);
-
 // ----------------------------------------------------
 // ROLE SELECTION (HOME PAGE)
 // ----------------------------------------------------
